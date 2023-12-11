@@ -1,97 +1,75 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 
-const initialItens = [
-  { id: 1, nome: "Banana" },
-  { id: 2, nome: "Uva" },
-];
+interface Product {
+  id: number;
+  nome: string;
+}
 
 export default function Home() {
-<<<<<<< HEAD
+  const [loading, setLoading]  = useState(false)
   const [textInput, setTexInput] = useState("")
-=======
-  const [textInput, setTextInput] = useState("");
->>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
-  const [itens, setItens] = useState(initialItens);
+  const [items, setItems] = useState<Product[]>([]);
+  
+  useEffect(() => {
+    loadItems();
+},[]);
 
-  async function handleClick() {
-    const response = await api.get("/produtos");
-    console.log(response);
-    setItens(response.data);
-<<<<<<< HEAD
-    
-    //const response = await fetch("http://192.168.68.154:3000/produtos");
-    //const produtos = await response.json();
-    //setItens(produtos);
-    //console.log(produtos);
-  }
+useEffect(() => {
+  console.log("O código está passando por aqui");
+},[textInput])
+
+
+  async function loadItems() {
+    setLoading(true);
+
+      try {
+        const response = await api.get("/produtos");
+        console.log(response);
+        setItems(response.data);
+        console.log("sucess:", response);
+      }catch (error) {
+          console.log("Error:, error");
+        }finally{
+          setLoading(false);
+        }
+    }
 
  async function handleAddItem(){
     console.log(textInput);
     const data = { nome: textInput};
-=======
-
-    // const response = await fetch("http://192.168.68.154:3000/produtos");
-    // const produtos = await response.json();
-    // console.log(produtos);
-  }
-
-  async function handleAddItem() {
-    // console.log(textInput);
-    const data = { nome: textInput };
->>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
 
     try {
-      const response = await fetch("http://192.168.68.154:3000/produtos", {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
-      const result = await response.json();
-      console.log("Success:", result);
+      const response = await api.post('/produtos', data);
+      loadItems();
+      console.log(response);
+      
     } catch (error) {
-      console.error("Error:", error);
-<<<<<<< HEAD
-      alert ("Ocorreu um erro");
-=======
-      alert("Ocorreu um erro");
->>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
-    }
-  }
+      console.log("Error:", error)
+    } 
 
+  }
+function handleDeleteItem (itemId: number){
+  console.log(itemId)
+}
   return (
     <main>
-<<<<<<< HEAD
 
       <div>
-        <input onChange={(e) => setTexInput(e.target.value)} placeholder="digite aq" />
+        <input onChange={(e) => setTexInput(e.target.value)} placeholder="digite aqui" />
         <button onClick={handleAddItem}>enviar</button>
       </div>
 
-
-=======
-      <div style={{ marginBottom: 10 }}>
-        <input
-          onChange={(e) => setTextInput(e.target.value)}
-          placeholder="Digite o seu texto aqui..."
-        />
-        <button onClick={handleAddItem}>Enviar</button>
-      </div>
-
->>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
-      <button onClick={handleClick}>Buscar informação no servidor</button>
-
+      <span>
+        {loading && "Carregando..."}
+      </span>
       <ul>
-        {itens.map((item) => (
-          <li key={item.id}>{item.nome}</li>
+        {items.map((item) => (
+          <li key={item.id}>
+            {item.nome}
+          <button onClick = {() => handleDeleteItem(item.id)}>Deletar</button>
+          </li>
         ))}
       </ul>
     </main>

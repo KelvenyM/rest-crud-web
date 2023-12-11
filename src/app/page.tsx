@@ -46,7 +46,7 @@ useEffect(() => {
       console.log(response);
       
     } catch (error) {
-      console.log("Error:", error)
+      console.log("Errorrr:", error)
     } 
 
   }

@@ -8,13 +8,18 @@ const initialItens = [
 ];
 
 export default function Home() {
+<<<<<<< HEAD
   const [textInput, setTexInput] = useState("")
+=======
+  const [textInput, setTextInput] = useState("");
+>>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
   const [itens, setItens] = useState(initialItens);
 
   async function handleClick() {
     const response = await api.get("/produtos");
     console.log(response);
     setItens(response.data);
+<<<<<<< HEAD
     
     //const response = await fetch("http://192.168.68.154:3000/produtos");
     //const produtos = await response.json();
@@ -25,6 +30,17 @@ export default function Home() {
  async function handleAddItem(){
     console.log(textInput);
     const data = { nome: textInput};
+=======
+
+    // const response = await fetch("http://192.168.68.154:3000/produtos");
+    // const produtos = await response.json();
+    // console.log(produtos);
+  }
+
+  async function handleAddItem() {
+    // console.log(textInput);
+    const data = { nome: textInput };
+>>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
 
     try {
       const response = await fetch("http://192.168.68.154:3000/produtos", {
@@ -34,17 +50,26 @@ export default function Home() {
         },
         body: JSON.stringify(data),
       });
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
       const result = await response.json();
       console.log("Success:", result);
     } catch (error) {
       console.error("Error:", error);
+<<<<<<< HEAD
       alert ("Ocorreu um erro");
+=======
+      alert("Ocorreu um erro");
+>>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
     }
   }
 
   return (
     <main>
+<<<<<<< HEAD
 
       <div>
         <input onChange={(e) => setTexInput(e.target.value)} placeholder="digite aq" />
@@ -52,6 +77,16 @@ export default function Home() {
       </div>
 
 
+=======
+      <div style={{ marginBottom: 10 }}>
+        <input
+          onChange={(e) => setTextInput(e.target.value)}
+          placeholder="Digite o seu texto aqui..."
+        />
+        <button onClick={handleAddItem}>Enviar</button>
+      </div>
+
+>>>>>>> d52123749d45bea40b7c9be97be6d450358dddc6
       <button onClick={handleClick}>Buscar informação no servidor</button>
 
       <ul>
